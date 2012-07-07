@@ -6,6 +6,7 @@
 	"Title": "NBlog",
 	"Tagline": "A blog platform for ASP.NET MVC developers",
 	"Crossbar": "ASP.NET MVC 3.0, Razor, JSON.NET, Markdown, Autofac, AntiXSS, HTML5 & CSS3, OpenID, NSubstitute, ELMAH",
+	"PageAmount": "0",
 	"Admins":
 	[
 		"http://cxfx.myopenid.com/"

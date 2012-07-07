@@ -5,7 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using NBlog.Web.Application;
 using NBlog.Web.Application.Infrastructure;
+using NBlog.Web.Application.QueryObject;
 using NBlog.Web.Application.Service;
+using NBlog.Web.Application.Service.Entity;
+using NBlog.Web.Controllers.Adapters;
 
 namespace NBlog.Web.Controllers
 {
@@ -14,23 +17,34 @@ namespace NBlog.Web.Controllers
         public HomeController(IServices services) : base(services) { }
 
         [HttpGet]
-        public ViewResult Index()
+        public ViewResult Index(int pageId = 1)
         {
-            var entries = Services.Entry.GetList();
+            var entries = Services.Entry.GetList().OrderByDescending(e => e.DateCreated);
 
-            var model = new IndexModel
+            IEnumerable<Entry> mainEntryList;
+            PageList mainPageList = null;
+
+            if (Services.Config.Current.IsPagingEnabled)
             {
-                Entries = entries
-                    .OrderByDescending(e => e.DateCreated)
-                    .Select(e => new EntrySummaryModel
-                    {
-                        Key = e.Slug,
-                        Title = e.Title,
-                        Date = e.DateCreated.ToDateString(),
-                        PrettyDate = e.DateCreated.ToPrettyDate(),
-                        IsPublished = e.IsPublished ?? true
-                    })
-            };
+                IEnumerable<Entry> list = entries;
+                if (!Services.User.Current.IsAdmin)
+                    list = entries.Where(x => x.IsPublished ?? true);
+                int amount = list.Count();
+                list = PaggingQuery<Entry>.ToPageList(list, Services.Config.Current.PageAmount, pageId);
+
+                mainEntryList = list;
+                mainPageList = new PageList(pageId, amount, Services.Config.Current.PageAmount);
+            }
+            else
+            {
+                mainEntryList = entries;
+            }
+
+            var model = new IndexModel()
+                            {
+                                Entries = mainEntryList.Select(EntrySummaryModelAdapter.Convert),
+                                Pagging = mainPageList
+                            };
 
             return View(model);
         }

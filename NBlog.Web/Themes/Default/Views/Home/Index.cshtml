@@ -19,9 +19,27 @@
         <li>
             @Html.ActionLink(entry.Title, "Show", "Entry", new { id = entry.Key }, null)
             <div class="date">@entry.Date</div>
-            @if (!entry.IsPublished) { <div class="publication-status">(Unpublished)</div> }
+            @if (!entry.IsPublished)
+            { <div class="publication-status">(Unpublished)</div> }
         </li>
     }
     </ul>
 
+    @Pagging(Model.Pagging)
+
 </article>
+@helper Pagging(HomeController.PageList pageList)
+    {
+        if (pageList != null)
+        {
+            if (pageList.CurrentPage > 1)
+            {
+    @Html.ActionLink("Previous", "Index", new { pageId = pageList.CurrentPage - 1 })
+    @: &nbsp;
+            }
+            if (pageList.RowsAmount > (pageList.CurrentPage * pageList.PageAmount))
+            {
+    @Html.ActionLink("Next", "Index", new { pageId = pageList.CurrentPage + 1 })
+            }
+        }
+}

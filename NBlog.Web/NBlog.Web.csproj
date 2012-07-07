@@ -197,6 +197,7 @@
     <Compile Include="Application\Infrastructure\NoBindingAttribute.cs" />
     <Compile Include="Application\Infrastructure\RouteExtensions.cs" />
     <Compile Include="Application\Infrastructure\RssResult.cs" />
+    <Compile Include="Application\QueryObject\PaggingQuery.cs" />
     <Compile Include="Application\Service\Entity\Config.cs" />
     <Compile Include="Application\Service\IConfigService.cs" />
     <Compile Include="Application\Service\IEntryService.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Application\Storage\Sql\PetaPoco.cs" />
     <Compile Include="Application\Storage\Sql\SqlRepository.cs" />
     <Compile Include="Application\Infrastructure\StringExtensions.cs" />
+    <Compile Include="Controllers\Adapters\EntrySummaryModelAdapter.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\ContactController.cs" />

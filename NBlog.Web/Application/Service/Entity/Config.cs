@@ -12,6 +12,7 @@ namespace NBlog.Web.Application.Service.Entity
         public string Heading { get; set; }
         public string Tagline { get; set; }
         public string Crossbar { get; set; }
+        public int PageAmount { get; set; }
         public List<string> Admins { get; set; }
         public string GoogleAnalyticsId { get; set; }
         public string TwitterUsername { get; set; }
@@ -38,6 +39,11 @@ namespace NBlog.Web.Application.Service.Entity
         {
             public string Shortname { get; set; }
             public bool DevelopmentMode { get; set; }
+        }
+
+        public bool IsPagingEnabled
+        {
+            get { return PageAmount != 0; }
         }
     }
 }

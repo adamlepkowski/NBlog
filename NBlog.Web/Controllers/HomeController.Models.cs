@@ -12,6 +12,7 @@ namespace NBlog.Web.Controllers
         public class IndexModel : LayoutModel
         {
             public IEnumerable<EntrySummaryModel> Entries { get; set; }
+            public PageList Pagging { get; set; }
         }
 
         public class EntrySummaryModel
@@ -21,6 +22,20 @@ namespace NBlog.Web.Controllers
             public string Date{ get; set; }
             public string PrettyDate { get; set; }
             public bool IsPublished { get; set; }
+        }
+
+        public class PageList
+        {
+            public PageList(int currentPage, int rowsAmount, int pageAmount)
+            {
+                CurrentPage = currentPage;
+                RowsAmount = rowsAmount;
+                PageAmount = pageAmount;
+            }
+
+            public int CurrentPage { get; set; }
+            public int RowsAmount { get; set; }
+            public int PageAmount { get; set; }
         }
     }
 }
